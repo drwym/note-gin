@@ -2,16 +2,25 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
-	"note-gin/handler/middleware"
-	"note-gin/model"
+	"note-gin/config"
+	"note-gin/models"
+	"note-gin/pkg/QiniuClient"
+	"note-gin/pkg/RedisClient"
+	"note-gin/pkg/logging"
 	"note-gin/router"
 )
 
+func init() {
+	config.SetUp()
+	models.SetUp()
+	RedisClient.SetUp()
+	QiniuClient.SetUp()
+	logging.SetUp()
+}
+
 func main() {
-	//注意添加表情的编码 并且将mysql数据库编码设置好
-	model.InitDataBase(youMysql)
 	r := router.NewRouter()
-	middleware.SendMailFromRedis() //定时从redis读取访问记录 并且发送到邮箱  我个人监控本站
-	gin.SetMode(gin.ReleaseMode)
-	r.Run(":9002")
+	gin.SetMode(config.Conf.ServerConfig.RunMode)
+
+	r.Run(config.Conf.ServerConfig.Host + ":" + config.Conf.ServerConfig.Port)
 }

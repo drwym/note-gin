@@ -23,5 +23,5 @@ func build(filepath string) {
 }
 
 func main() {
-	build(`D:\Go_Code\note-gin\main.go`)
+	build(`main.go`)
 }

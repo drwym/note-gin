@@ -1,23 +1,24 @@
 package router
 
-import "note-gin/handler/ArticleHandler"
+import "note-gin/controller/ArticleController"
 
 func ArticleRouter(base string) {
 	r := Router.Group("/" + base)
 
-	r.GET("/download/:id", ArticleHandler.DownLoad)
-	r.GET("/many/:page", ArticleHandler.GetManyArticle)
-	r.GET("/get/:id", ArticleHandler.GetArticleInfo)
-	r.GET("/delete/forever", ArticleHandler.DeleteForever)
-	r.GET("/delete", ArticleHandler.Delete)
-	r.GET("/delete/many", ArticleHandler.DeleteMany)
-	r.GET("/rubbish", ArticleHandler.GetRubbishArticle)
-	r.GET("/recover", ArticleHandler.Recover)
-	r.GET("/temp_get", ArticleHandler.TempEditGet) //获取上次的编辑器保存
-	r.GET("/temp_delete", ArticleHandler.TempEditDelete)
-
-	r.POST("/temp_save", ArticleHandler.TempEditSave) //编辑器保存
-	r.POST("/add", ArticleHandler.Add)
-	r.POST("/update", ArticleHandler.Update)
-	r.POST("/edit", ArticleHandler.Edit)
+	r.GET("/download/:id", ArticleController.ArticleDownLoad)
+	r.GET("/many/:page", ArticleController.GetArticleByPage)
+	r.GET("/get/:id", ArticleController.GetArticleDetail)
+	r.GET("/clear_rubbish", ArticleController.ClearRubbish)
+	r.GET("/delete", ArticleController.Delete)
+	r.GET("/delete/many", ArticleController.DeleteMany)
+	r.GET("/rubbish", ArticleController.GetRubbishArticles)
+	r.GET("/recover", ArticleController.ArticleRecover)
+	r.GET("/temp_get", ArticleController.TempArticleEditGet) //获取上次的编辑器保存
+	r.GET("/temp_delete", ArticleController.TempArticleEditDelete)
+	r.POST("/temp_save", ArticleController.TempArticleEditSave) //编辑器保存
+	r.POST("/add", ArticleController.Add)
+	r.POST("/update", ArticleController.Update)
+	r.GET("/edit/:id", ArticleController.Edit)
+	r.POST("/set_tag", ArticleController.SetTag)
+	r.POST("/upload_md", ArticleController.UploadArticle)
 }
